@@ -52,6 +52,7 @@ import com.jehutyno.yomikata.util.checkSpeechAvailability
 import com.jehutyno.yomikata.util.showWordSelectionDialog
 import com.jehutyno.yomikata.util.hideSoftKeyboard
 import com.jehutyno.yomikata.util.onTTSinit
+import com.jehutyno.yomikata.util.quiz.Level
 import com.jehutyno.yomikata.util.quiz.QuizType
 import com.jehutyno.yomikata.util.quiz.getCategoryLevel
 import com.jehutyno.yomikata.util.reportError
@@ -194,6 +195,17 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
                             dialog.show(childFragmentManager, "")
                         },
                         onSelectionClick = { showSelectionMenu() },
+                        onProgressClick = { level ->
+                            val word = uiState.currentWord ?: return@QuizScreen
+                            lifecycleScope.launch {
+                                if (word.level == level) return@launch
+                                presenter.updateWordPoints(word.id, level.minPoints)
+                                presenter.updateWordLevel(word.id, level)
+                                word.points = level.minPoints
+                                word.level = level
+                                uiState = uiState.copy(words = uiState.words.toList())
+                            }
+                        },
                         onReportClick = {
                             presenter.onReportClick(uiState.currentIndex)
                         },
