@@ -62,4 +62,19 @@ class RandomAnswerGeneratorTest {
         assertEquals(correct,
             generator(3).generateQCMRandoms(correct, QuizType.TYPE_JAP_EN, "x")[3].first)
     }
+
+    @Test
+    fun `generateQCMRandoms handles fewer than 3 repository distractors without crashing`() = runBlocking {
+        val correct = word(1, "right")
+        val repo = mockk<WordRepository>()
+        coEvery { repo.getRandomWords(any(), any(), any(), any(), any()) } returns ArrayList(listOf(word(2, "a")))
+        coEvery { repo.getAllWords() } returns listOf(correct, word(2, "a"), word(3, "b"), word(4, "c"))
+        val rng = object : Random() {
+            override fun nextInt(bound: Int) = 1
+        }
+        val generator = RandomAnswerGenerator(repo, rng)
+        val result = generator.generateQCMRandoms(correct, QuizType.TYPE_JAP_EN, "right")
+        assertEquals(4, result.size)
+        assertTrue(result.any { it.first.id == correct.id })
+    }
 }
