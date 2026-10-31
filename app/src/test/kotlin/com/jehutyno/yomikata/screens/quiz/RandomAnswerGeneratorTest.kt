@@ -69,45 +69,24 @@ class RandomAnswerGeneratorTest {
             generator(3).generateQCMRandoms(correct, QuizType.TYPE_JAP_EN, "x")[3].first)
     }
 
-    @Test
-    fun `generateQCMRandoms handles fewer than 3 repository distractors without crashing`() = runBlocking {
-        val correct = word(1, "right")
-        val repo = mockk<WordRepository>()
-        coEvery { repo.getRandomWords(any(), any(), any(), any(), any()) } returns ArrayList(listOf(word(2, "a")))
-        coEvery { repo.getAllWords() } returns listOf(correct, word(2, "a"), word(3, "b"), word(4, "c"))
-        val rng = object : Random() {
-            override fun nextInt(bound: Int) = 1
-        }
-        val generator = RandomAnswerGenerator(repo, rng)
-        val result = generator.generateQCMRandoms(correct, QuizType.TYPE_JAP_EN, "right")
-        assertEquals(4, result.size)
-        assertTrue(result.any { it.first.id == correct.id })
-    }
-
     /**
-     * The repository can return fewer than 3 distractors. Drawing the insertion index over a fixed
-     * 4 then crashed with `IndexOutOfBoundsException` (crash Crashlytics 2.1.0) — the correct word
-     * must still be returned, whatever the number of distractors available.
+     * Check that the QCM generator will always provide enough distractors and include the correct
+     * answer among the choices.
+     * Drawing the insertion index over 4 used to crash with `IndexOutOfBoundsException` (crash
+     * Crashlytics 2.1.0).
      */
     @Test
-    fun `no distractor available still returns the correct word`() = runBlocking {
-        val correct = word(1, "right")
-        val result = generator(3, emptyList()).generateQCMRandoms(correct, QuizType.TYPE_JAP_EN, "right")
-        assertEquals(1, result.size)
-        assertEquals(correct, result[0].first)
-    }
-
-    @Test
-    fun `fewer distractors than expected still returns the correct word`() = runBlocking {
-        val correct = word(1, "right")
-        for (count in 1..3) {
+    fun `correct word is preserved with fewer than expected distractors at every insertion index`() = runBlocking {
+        val correct = word(1, "right") // 日本1 right に
+        for (count in 0..3) {
+            // Allow only [count] distractors
             val available = distractors.take(count)
             for (index in 0..3) {
                 val result = generator(index, available)
                     .generateQCMRandoms(correct, QuizType.TYPE_JAP_EN, "right")
-                assertEquals(count + 1, result.size)
-                assertTrue("correct word missing (count=$count, index=$index)",
-                    result.map { it.first }.contains(correct))
+                assertEquals(4, result.size)
+                assertTrue("Correct word missing (count=$count, index=$index)",
+                    result.any { it.first == correct })
             }
         }
     }
