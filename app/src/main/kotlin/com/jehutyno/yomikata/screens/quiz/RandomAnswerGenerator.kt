@@ -1,6 +1,5 @@
 package com.jehutyno.yomikata.screens.quiz
 
-import android.R
 import com.jehutyno.yomikata.model.Word
 import com.jehutyno.yomikata.repository.WordRepository
 import com.jehutyno.yomikata.util.quiz.QuizType
@@ -38,7 +37,7 @@ class RandomAnswerGenerator(
         // Generate 3 different random words
         val random = wordRepository.getRandomWords(word.id, answerToAvoid, wordSize, 3, quizType)
         val randoms = arrayListOf<Pair<Word, Int>>()
-        random.forEach { randoms.add(Pair(it, R.color.white)) }
+        random.forEach { randoms.add(Pair(it, android.R.color.white)) }
 
         // If we have fewer than 3 distractors, fill up using getAllWords or padding
         if (randoms.size < 3) {
@@ -51,14 +50,14 @@ class RandomAnswerGenerator(
             for (w in allWords) {
                 if (randoms.size >= 3) break
                 if (w.id !in existingIds) {
-                    randoms.add(Pair(w, R.color.white))
+                    randoms.add(Pair(w, android.R.color.white))
                 }
             }
         }
 
         // If still fewer than 3 (e.g. DB has < 4 words total), pad with word
         while (randoms.size < 3) {
-            randoms.add(Pair(word, R.color.white))
+            randoms.add(Pair(word, android.R.color.white))
         }
 
         // Ensure exactly 3 distractors before inserting the correct word
@@ -66,7 +65,7 @@ class RandomAnswerGenerator(
 
         // Insert the good answer at a random place (0 to size inclusive)
         val insertIndex = rng.nextInt(distractors.size + 1)
-        distractors.add(insertIndex, Pair(word, R.color.white))
+        distractors.add(insertIndex, Pair(word, android.R.color.white))
 
         return distractors
     }
