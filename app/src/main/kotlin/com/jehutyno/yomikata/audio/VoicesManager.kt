@@ -36,10 +36,10 @@ class VoicesManager(val context: Activity) {
 
         if (warnEnabled) {
             if (audio.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
-                Toast.makeText(context, R.string.message_adjuste_volume, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, R.string.message_adjust_volume, Toast.LENGTH_LONG).show()
             }
             if (volumeInt == 0) {
-                Toast.makeText(context, R.string.message_adjuste_tts_volume, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, R.string.message_adjust_tts_volume, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -73,10 +73,10 @@ class VoicesManager(val context: Activity) {
 
         if (warnEnabled) {
             if (audio.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
-                Toast.makeText(context, R.string.message_adjuste_volume, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.message_adjust_volume, Toast.LENGTH_SHORT).show()
             }
             if (volumeInt == 0) {
-                Toast.makeText(context, R.string.message_adjuste_tts_volume, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.message_adjust_tts_volume, Toast.LENGTH_SHORT).show()
             }
         }
 

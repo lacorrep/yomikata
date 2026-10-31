@@ -33,13 +33,13 @@ Ordre recommandé : du plus rapide au plus lent. **S'arrêter au premier rouge.*
 
 On maximise la logique testée sur la JVM (rapide, déterministe), on réserve l'émulateur aux comportements vraiment intégrés, et on garde le test manuel au strict minimum irréductible (audio, réseau réel, services Google, pickers système).
 
-| Couche | Quoi | Outil | Device ? | Statut |
-|---|---|---|---|---|
-| **1** | Logique pure (presenters, validateurs, mappings, fallback traductions) | JUnit 4 + MockK | non | ✅ 147 tests, 13 classes |
-| **2** | Room : DAOs, migrations, **intégrité de l'asset** | Room Testing + AndroidJUnit | émulateur | ✅ DAOs + migrations + `DatabaseIntegrityTest` |
-| **3** | Régression visuelle des écrans Compose | Roborazzi + Robolectric | non (JVM) | ✅ 20 baselines (8 écrans + composants) × EN/DE |
-| **4** | Interactions Compose (callbacks ↔ UI) | Compose UI Test | émulateur/appareil | 🟡 nav, quiz, sélections, study, liste de mots |
-| **5** | Irréductible manuel (audio, réseau, GA4, SAF, 1er lancement) | checklist IA-assistée | device réel | 🔁 à chaque release |
+| Couche | Quoi                                                                   | Outil                       | Device ?           | Statut                                         |
+|--------|------------------------------------------------------------------------|-----------------------------|--------------------|------------------------------------------------|
+| **1**  | Logique pure (presenters, validateurs, mappings, fallback traductions) | JUnit 4 + MockK             | non                | ✅ 147 tests, 13 classes                        |
+| **2**  | Room : DAOs, migrations, **intégrité de l'asset**                      | Room Testing + AndroidJUnit | émulateur          | ✅ DAOs + migrations + `DatabaseIntegrityTest`  |
+| **3**  | Régression visuelle des écrans Compose                                 | Roborazzi + Robolectric     | non (JVM)          | ✅ 20 baselines (8 écrans + composants) × EN/DE |
+| **4**  | Interactions Compose (callbacks ↔ UI)                                  | Compose UI Test             | émulateur/appareil | 🟡 nav, quiz, sélections, study, liste de mots |
+| **5**  | Irréductible manuel (audio, réseau, GA4, SAF, 1er lancement)           | checklist IA-assistée       | device réel        | 🔁 à chaque release                            |
 
 ---
 

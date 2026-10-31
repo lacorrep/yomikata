@@ -220,8 +220,8 @@
     <string name="update_voices">Stimmen aktualisieren (%1$dMB)</string>
     <string name="update_voices_alert">Stimmen aktualisieren</string>
     <string name="update_voices_alert_message">Die Stimmen wurden auf dem Server aktualisiert. Sie können %dMB Stimmen für diese Kategorie herunterladen, um die neuesten Korrekturen zu erhalten.</string>
-    <string name="message_adjuste_volume">Die Lautstärke ist zu niedrig, bitte anpassen</string>
-    <string name="message_adjuste_tts_volume">Die Sprechlautstärke ist zu niedrig, bitte anpassen</string>
+    <string name="message_adjust_volume">Die Lautstärke ist zu niedrig, bitte anpassen</string>
+    <string name="message_adjust_tts_volume">Die Sprechlautstärke ist zu niedrig, bitte anpassen</string>
     <string name="delete_voices_files">Stimmdateien löschen</string>
     <string name="dont_ask_voices">Nicht mehr fragen</string>
     <string name="voices_reinit_done">Stimmdateien wurden gelöscht</string>
@@ -333,9 +333,9 @@
     <string name="fab_next">Weiter →</string>
     <string name="update_ready_message">Update installationsbereit</string>
     <string name="update_restart_action">Neu starten</string>
-    <string name="bottomnav_home">Startseite</string>
-    <string name="bottomnav_study">Lernen</string>
-    <string name="bottomnav_selections">Auswahl</string>
-    <string name="bottomnav_settings">Optionen</string>
+    <string name="bottom_nav_home">Startseite</string>
+    <string name="bottom_nav_study">Lernen</string>
+    <string name="bottom_nav_selections">Auswahl</string>
+    <string name="bottom_nav_settings">Optionen</string>
     <string name="prefs_quiz_settings">Quiz-Einstellungen</string>
 </resources>

@@ -56,10 +56,10 @@ enum class BottomNavDestination(
     @param:StringRes val labelRes: Int,
     @param:DrawableRes val iconRes: Int
 ) {
-    HOME(R.string.bottomnav_home, R.drawable.ic_home),
-    STUDY(R.string.bottomnav_study, R.drawable.ic_list),
-    SELECTIONS(R.string.bottomnav_selections, R.drawable.ic_star_black_24dp),
-    SETTINGS(R.string.bottomnav_settings, R.drawable.ic_settings)
+    HOME(R.string.bottom_nav_home, R.drawable.ic_home),
+    STUDY(R.string.bottom_nav_study, R.drawable.ic_list),
+    SELECTIONS(R.string.bottom_nav_selections, R.drawable.ic_star_black_24dp),
+    SETTINGS(R.string.bottom_nav_settings, R.drawable.ic_settings)
 }
 
 /**

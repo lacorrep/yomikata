@@ -32,6 +32,7 @@
     <string name="mastery_percent_label">maîtrisé</string>
     <plurals name="word_count_label">
         <item quantity="one">%d mot</item>
+        <item quantity="many">%d mots</item>
         <item quantity="other">%d mots</item>
     </plurals>
     <string name="quit_quiz">Voulez-vous quitter cette session ?</string>
@@ -218,8 +219,8 @@
     <string name="update_voices">Mise à jour des voix (%1$dMo)</string>
     <string name="update_voices_alert">Mise à jour des voix</string>
     <string name="update_voices_alert_message">Les voix ont été mises à jour sur le serveur. Afin d\'obtenir les dernières corrections de celles-ci vous pouvez télécharger les %dMo de cette catégorie.</string>
-    <string name="message_adjuste_volume">Le son du téléphone est coupé, veuillez l\'ajuster</string>
-    <string name="message_adjuste_tts_volume">Le volume de la synthèse vocale est trop faible, veuillez l\'ajuster</string>
+    <string name="message_adjust_volume">Le son du téléphone est coupé, veuillez l\'ajuster</string>
+    <string name="message_adjust_tts_volume">Le volume de la synthèse vocale est trop faible, veuillez l\'ajuster</string>
     <string name="delete_voices_files">Effacer les fichiers de voix</string>
     <string name="dont_ask_voices">Ne plus demander</string>
     <string name="voices_reinit_done">Fichiers de voix supprimés</string>
@@ -331,10 +332,10 @@
     <string name="fab_next">Suivant →</string>
     <string name="update_ready_message">Mise à jour prête à installer</string>
     <string name="update_restart_action">Redémarrer</string>
-    <string name="bottomnav_home">Accueil</string>
-    <string name="bottomnav_study">Étudier</string>
-    <string name="bottomnav_selections">Sélections</string>
-    <string name="bottomnav_settings">Réglages</string>
+    <string name="bottom_nav_home">Accueil</string>
+    <string name="bottom_nav_study">Étudier</string>
+    <string name="bottom_nav_selections">Sélections</string>
+    <string name="bottom_nav_settings">Réglages</string>
     <string name="prefs_quiz_settings">Paramètres des quiz</string>
     <string name="font_serif_summary">Afficher le japonais dans une police différente</string>
     <string name="font_serif_title">Police avec empattement</string>
