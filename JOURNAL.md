@@ -16,6 +16,7 @@ Le plus récent en haut. Ajout seul : une entrée n'est jamais modifiée après 
 #### Plan en cours — Audit BDD multi-langues
 
 #### Phases terminées
+
 - ✅ **Phase 1** : Nettoyage migrations (suppression v1–12, fallbackToDestructiveMigration)
 - ✅ **Phase 2** : Migration 17 — nettoyage données (fantôme id=3537, espaces doubles)
 - ✅ **Phase 3a** : LanguageManager + refactoring getTrad() (6 langues)
@@ -29,6 +30,7 @@ Le plus récent en haut. Ajout seul : une entrée n'est jamais modifiée après 
 - ✅ **Phase 3f** : Mandarin — UI strings (238 strings, values-zh/strings.xml) + noms de quiz (96/96)
 
 #### Phases suivantes
+
 - ✅ **Phase 4** : Tags POS — colonne `pos` dans `words` (migration 19→20), extraction depuis `english`, chips localisés dans la fiche détail du mot
 - ✅ **Migration phrases v16** : `populateTranslationsIfNeeded` étendue pour `sentences` (DE/ES/PT/ZH) depuis `yomikataz_translations.db` ; `needsTranslations` vérifie `words.german` ET `sentences.de` pour couvrir les utilisateurs déjà migrés avant l'ajout des traductions de phrases
 - ✅ **Refactoring packages** : réorganisation complète des packages (dao→repository/database/dao, managers→audio, furigana→view/furigana, presenters/source→presenters/impl, util sous-packages language/quiz/backup/japanese, screens/prefs)
@@ -79,4 +81,5 @@ Le plus récent en haut. Ajout seul : une entrée n'est jamais modifiée après 
 - ✅ **Session plurals-word-count** : Migration de la chaîne `word_count_label` de `<string>` vers `<plurals>` dans toutes les langues (EN, FR, DE, ES, PT, ZH) avec gestion correcte du singulier (`one`) et du pluriel (`other`/`many`), en remplaçant `stringResource` par `pluralStringResource` dans `MasteryBar`, `SelectionsScreen` et `WordListScreen`. Baselines Roborazzi mises à jour via `recordRoborazziDebug`. Tests 100% verts (183 tests unitaires + Roborazzi).
 - ✅ **Session fix-sentence-highlight-reading** : Correction d'un bug de surbrillance du mot dans la phrase d'exemple (ex. "テーブルの{上;うえ}に{茶碗;ちゃわん}があります。") où seul le premier caractère ("テ") était mis en surbrillance. Gemini 3.5 Flash Lite pense que c'est parce que `word.reading` contenait plusieurs lectures séparées par des slashes (ex. `"ちゃわん/..."`), provoquant l'échec de la recherche exacte `{${word.japanese};${word.reading}}` dans `getWordPositionInFuriSentence` (retournant `-1` puis ramené à `0`), MAIS ça n'est pas le cas dans la phrase où le problème avait lieu (sentence 6293, word 1354). Le fix proposé corrige le problème malgré tout. **Fix** : extraction de la première lecture (`word.reading.split("/")[0].trim()`) et ajout de replis robustes (recherche de la balise avec n'importe quelle lecture `{${word.japanese};` ou recherche de `word.japanese` en texte brut pour les mots sans crochets comme `テーブル`). Test unitaire ajouté dans `FuriganaParsingTest`. Pas de migration BDD.
 - ✅ **Chinois dans les QCM** (ZH) : `removeAnyJapanese` supprimait aussi la traduction en Han. On pourrait modifier `cleanForQCM` avec la langue cible comme paramètre, mais aucun élément de la colonne "words.chinese" ne contient des kana japonais. Il semblerait que la traduction par Claude n'ait rien laissé en japonais (normal, elle se base sur l'anglais et le français).
+- ✅ Séparation des responsabilités `updateWordLevel` / `updateWordPoints` : `WordDao.kt` et `WordSource.kt` : `updateWordLevel` met désormais uniquement à jour la colonne level (`SET level = :level`) sans écraser les points avec `level.minPoints`. Ajout d'une documentation claire (KDoc) dans `WordRepository.kt` précisant que `updateWordLevel` n'affecte pas les points et que `updateWordPoints` doit être appelé en amont lorsque l'on modifie les deux simultanément. Création de la méthode `updateWordLevelAndPoints` dans les contrats et présentateurs `QuizPresenter.kt` et `AnswersPresenter.kt` (ainsi que dans leurs fragments respectifs `QuizFragment.kt` et `AnswersFragment.kt`) pour réinitialiser explicitement les points à level.minPoints lorsqu'un utilisateur change manuellement de palier depuis l'interface. Dans `QuizPresenter.kt`, l'état en mémoire du mot est mis à jour avant la synchronisation des répétitions et des points. Adaptation des tests `WordDaoTest.kt` pour valider l'accumulation correcte des points et la persistance du niveau.
 - **Phase 5** : Tests intégrité BDD (`DatabaseIntegrityTest`)

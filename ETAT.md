@@ -1,6 +1,6 @@
 # État
 
-Dernière mise à jour : 2026-10-30
+Dernière mise à jour : 2026-10-31
 
 Ce fichier décrit où on en est, jamais l'historique (voir `JOURNAL.md`). Il se réécrit à chaque fin de session. Première version reprise de l'ancien `CLAUDE.md`, à confirmer à la prochaine reprise.
 
@@ -59,7 +59,10 @@ where s.jap not like '%' || w.japanese || '%'
 
 ## Comptage des tests
 
-**155 tests unitaires JVM — 100% verts** (13 classes), soit **184 tests JVM** avec les 29 screenshots Roborazzi.
+Le nombre de tests JVM (unitaires + screenshots) peut être lu dans `app/build/reports/tests/testDebugUnitTest/index.html`.
+Il y a 29 tests qui produisent 45 fichiers screenshots Roborazzi dans `app/src/test/screenshots`.
+
+**170 tests unitaires JVM — 100% verts** (13 classes), soit **199 tests JVM** avec les 29 tests qui produisent les screenshots Roborazzi.
 
 Ajoutés lors du durcissement pré-prod (couche 1) :
 - `GetTradMultiLanguageTest` — fallback `getTrad()`/`getName()` DE/ES/PT/ZH sur les 5 modèles (Word/Sentence/KanjiSolo/Radical/Quiz)

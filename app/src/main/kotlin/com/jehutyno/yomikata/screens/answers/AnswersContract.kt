@@ -22,6 +22,7 @@ interface AnswersContract {
         suspend fun getAnswersWordsSentences(answers: List<Answer>): List<Triple<Answer, Word, Sentence>>
         suspend fun getSentenceById(id: Long): Sentence
         suspend fun updateWordLevel(wordId: Long, level: Level)
+        suspend fun updateWordLevelAndPoints(wordId: Long, level: Level)
     }
 
 }

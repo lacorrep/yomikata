@@ -109,6 +109,6 @@ private fun MasteryDotsMasterPreview() {
 @Composable
 private fun MasteryDotsMasterMaxPreview() {
     YomikataTheme {
-        MasteryDots(points = 850, label = "Master", modifier = Modifier.padding(14.dp))
+        MasteryDots(points = 850, label = "Max points", modifier = Modifier.padding(14.dp))
     }
 }

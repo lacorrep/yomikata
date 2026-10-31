@@ -605,16 +605,15 @@ class QuizPresenter(
         val newLevel = getLevelFromPoints(newPoints)
         val newRepetition = getRepetition(newPoints, result)
 
+        word.level = newLevel
+        word.points = newPoints
+
         // update database word
         updateWordPoints(word.id, newPoints)
         updateWordLevel(word.id, newLevel)
         updateRepetitions(word.id, newRepetition)
 
         quizView.animateColor(sessionState.getActiveIndex(), word, currentSentence, quizType, word.points, newPoints)
-
-        // update in-memory word
-        word.level = newLevel
-        word.points = newPoints
     }
 
     private fun addCurrentWordToAnswers(answer: String, result: Boolean) {
@@ -745,6 +744,21 @@ class QuizPresenter(
     }
 
     override suspend fun updateWordLevel(wordId: Long, level: Level) {
+        wordStatisticsRecorder.updateWordLevel(wordId, level)
+        val updatedQuizWords = sessionState.quizWords.map { (word, type) ->
+            if (word.id == wordId) Pair(word.copy(level = level), type) else Pair(word, type)
+        }
+        sessionState.quizWords = updatedQuizWords
+
+        val updatedErrors = sessionState.errors.map { (word, type) ->
+            if (word.id == wordId) Pair(word.copy(level = level), type) else Pair(word, type)
+        }
+        sessionState.errors.clear()
+        sessionState.errors.addAll(updatedErrors)
+    }
+
+    override suspend fun updateWordLevelAndPoints(wordId: Long, level: Level) {
+        wordStatisticsRecorder.updateWordPoints(wordId, level.minPoints)
         wordStatisticsRecorder.updateWordLevel(wordId, level)
         val updatedQuizWords = sessionState.quizWords.map { (word, type) ->
             if (word.id == wordId) Pair(word.copy(level = level, points = level.minPoints), type) else Pair(word, type)

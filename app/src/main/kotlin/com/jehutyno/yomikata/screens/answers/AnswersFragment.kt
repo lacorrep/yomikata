@@ -123,7 +123,7 @@ class AnswersFragment(private val di: DI) : Fragment(), AnswersContract.View, Te
         val word = item.second
         if (word.level == newLevel && word.points == newLevel.minPoints) return
         lifecycleScope.launch {
-            presenter.updateWordLevel(word.id, newLevel)
+            presenter.updateWordLevelAndPoints(word.id, newLevel)
             val updatedWord = word.copy(level = newLevel, points = newLevel.minPoints)
             val updatedItems = uiState.items.mapIndexed { i, it ->
                 if (i == index) Triple(it.first, updatedWord, it.third) else it

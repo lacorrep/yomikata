@@ -23,6 +23,11 @@ class LevelSystemTest {
     }
 
     @Test
+    fun getLevelFromPoints_just_below_LOW_threshold_is_LOW() {
+        assertEquals(Level.LOW, getLevelFromPoints(Level.LOW.minPoints - 1))
+    }
+
+    @Test
     fun getLevelFromPoints_just_below_MEDIUM_threshold_is_LOW() {
         assertEquals(Level.LOW, getLevelFromPoints(Level.MEDIUM.minPoints - 1))
     }
@@ -82,6 +87,12 @@ class LevelSystemTest {
         assertTrue("expected ~0.5 progress, got $progress", progress in 0.45f..0.55f)
     }
 
+    @Test
+    fun progress_from_zero() {
+        // special case handled because 0 < Level.LOW.minPoints
+        assertEquals(0f, getProgressToNextLevel(0))
+    }
+
     // --- levelDown ---
 
     @Test
@@ -91,7 +102,7 @@ class LevelSystemTest {
 
     @Test
     fun levelDown_from_LOW_returns_zero() {
-        assertEquals(0, levelDown(0))
+        assertEquals(0, levelDown(Level.LOW.minPoints))
     }
 
     @Test

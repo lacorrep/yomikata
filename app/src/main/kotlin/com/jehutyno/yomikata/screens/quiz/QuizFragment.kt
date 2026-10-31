@@ -224,8 +224,7 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
                             val word = uiState.currentWord ?: return@QuizScreen
                             lifecycleScope.launch {
                                 if (word.level == level) return@launch
-                                presenter.updateWordPoints(word.id, level.minPoints)
-                                presenter.updateWordLevel(word.id, level)
+                                presenter.updateWordLevelAndPoints(word.id, level)
                                 val updatedWord = word.copy(level = level, points = level.minPoints)
                                 val updatedWords = uiState.words.mapIndexed { index, pair ->
                                     if (index == uiState.currentIndex) Pair(updatedWord, pair.second) else pair

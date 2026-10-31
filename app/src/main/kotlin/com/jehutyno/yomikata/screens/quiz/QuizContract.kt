@@ -69,6 +69,7 @@ interface QuizContract {
         suspend fun getWords(): List<Word>
         suspend fun loadWords(): List<Pair<Word, QuizType>>
         suspend fun updateWordLevel(wordId: Long, level: Level)
+        suspend fun updateWordLevelAndPoints(wordId: Long, level: Level)
         suspend fun getRandomWords(wordId: Long, answer: String, wordSize: Int, limit: Int, quizType: QuizType): ArrayList<Word>
         suspend fun updateWordPoints(wordId: Long, points: Int)
         suspend fun getNextProgressiveWords(): List<Pair<Word, QuizType>>

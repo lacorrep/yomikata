@@ -245,11 +245,11 @@ class WordDaoTest {
 
     @Test
     fun updateWordLevel() = runBlocking {
-        val id = wordDao.addWord(sampleRoomWords[0])
-        wordDao.updateWordLevel(id, 3, 600)
+        val id = wordDao.addWord(sampleRoomWords[0].copy(points = 100))
+        wordDao.updateWordLevel(id, 3)
         val word = wordDao.getWordById(id)!!
         assert(word.level == 3)
-        assert(word.points == 600)
+        assert(word.points == 100)
     }
 
     @Test

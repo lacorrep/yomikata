@@ -33,6 +33,11 @@ class AnswersPresenter(
         wordRepository.updateWordLevel(wordId, level)
     }
 
+    override suspend fun updateWordLevelAndPoints(wordId: Long, level: Level) {
+        wordRepository.updateWordPoints(wordId, level.minPoints)
+        wordRepository.updateWordLevel(wordId, level)
+    }
+
     override suspend fun getAnswersWordsSentences(answers: List<Answer>): List<Triple<Answer, Word, Sentence>> {
         val answersWordsSentences = mutableListOf<Triple<Answer, Word, Sentence>>()
         answers.forEach {

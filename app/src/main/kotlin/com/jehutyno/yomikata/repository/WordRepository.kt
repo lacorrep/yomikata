@@ -19,6 +19,11 @@ interface WordRepository {
     suspend fun isWordInQuizzes(wordId: Long, quizIds: Array<Long>) : ArrayList<Boolean>
     /** Reactive set of word ids present in at least one user selection (category 8). */
     fun getWordIdsInSelections() : Flow<List<Long>>
+    /**
+     * Updates the word's level. This method updates ONLY the level column in the database and does not modify points.
+     * When both points and level need to be updated together (e.g. during quiz progression or level up/down),
+     * [updateWordPoints] must be called before [updateWordLevel].
+     */
     suspend fun updateWordLevel(wordId: Long, level: Level)
     suspend fun getRandomWords(wordId: Long, answer: String, wordSize: Int, limit: Int, quizType: QuizType): ArrayList<Word>
     suspend fun updateWordPoints(wordId: Long, points: Int)
