@@ -334,8 +334,6 @@
     <string name="fab_next">Siguiente →</string>
     <string name="update_ready_message">Actualización lista para instalar</string>
     <string name="update_restart_action">Reiniciar</string>
-    <string name="prefs_kana_input_fix_message">Marque esta casilla si tiene problemas con el teclado japonés</string>
-    <string name="kana_input_fix">Problema con la entrada de kana</string>
     <string name="bottomnav_home">Inicio</string>
     <string name="bottomnav_study">Estudio</string>
     <string name="bottomnav_selections">Colecciones</string>

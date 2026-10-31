@@ -25,13 +25,6 @@
             android:summary="@string/prefs_warn_volume_too_low_summary"
             android:title="@string/prefs_warn_volume_too_low_title"/>
 
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:icon="@drawable/ic_keyboard"
-            android:key="kana_input_fix"
-            android:summary="@string/prefs_kana_input_fix_message"
-            android:title="@string/kana_input_fix"/>
-
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/speedArray"

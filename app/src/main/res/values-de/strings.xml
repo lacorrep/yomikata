@@ -333,8 +333,6 @@
     <string name="fab_next">Weiter →</string>
     <string name="update_ready_message">Update installationsbereit</string>
     <string name="update_restart_action">Neu starten</string>
-    <string name="prefs_kana_input_fix_message">Kreuzen Sie an, wenn Sie Probleme mit der japanischen Tastatur haben</string>
-    <string name="kana_input_fix">Problem mit der Kana-Eingabe</string>
     <string name="bottomnav_home">Startseite</string>
     <string name="bottomnav_study">Lernen</string>
     <string name="bottomnav_selections">Auswahl</string>

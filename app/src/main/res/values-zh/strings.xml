@@ -333,8 +333,6 @@
     <string name="fab_next">下一个 →</string>
     <string name="update_ready_message">更新已准备好安装</string>
     <string name="update_restart_action">重启</string>
-    <string name="prefs_kana_input_fix_message">如果您在使用日语键盘时遇到问题，请勾选此项</string>
-    <string name="kana_input_fix">假名输入问题</string>
     <string name="bottomnav_home">首页</string>
     <string name="bottomnav_study">学习</string>
     <string name="bottomnav_selections">词汇集</string>

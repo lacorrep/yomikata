@@ -232,7 +232,7 @@
     <string name="update_success_title">Update success</string>
     <string name="update_success_message">The database is now up to date!</string>
     <string name="share_subject">Try out Yomikata Z!</string>
-    <string name="share_message">"Let me recommend you this application to study Japanese:  https://play.google.com/apps/testing/com.jehutyno.yomikata   "</string>
+    <string name="share_message">Let me recommend you this application to study Japanese\n\nhttps://play.google.com/apps/testing/com.jehutyno.yomikata\n\n</string>
     <string name="share_choose">Share the app</string>
     <string name="alert_error_review_finished">Error review finished</string>
     <string name="alert_error_review_session_message">You reviewed all the errors of the session.</string>
@@ -362,8 +362,6 @@
     <string name="fab_next">Next →</string>
     <string name="update_ready_message">Update ready to install</string>
     <string name="update_restart_action">Restart</string>
-    <string name="prefs_kana_input_fix_message">Use if you have issues with Japanese keyboard</string>
-    <string name="kana_input_fix">Kana input fix</string>
     <string name="bottomnav_home">Home</string>
     <string name="bottomnav_study">Study</string>
     <string name="bottomnav_selections">Selections</string>
