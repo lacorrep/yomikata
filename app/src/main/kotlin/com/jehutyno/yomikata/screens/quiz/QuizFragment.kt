@@ -65,6 +65,7 @@ import org.kodein.di.instance
 import org.kodein.di.lazy
 import org.kodein.di.singleton
 import splitties.alertdialog.appcompat.*
+import androidx.core.content.edit
 
 
 class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSpeech.OnInitListener {
@@ -280,9 +281,10 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
                             speechRate = ttsRate,
                             warnIfVolumeTooLow = warnIfVolumeTooLow,
                             showSpeechRate = ttsShowRate,
-                            onVolumeChange = { v ->
-                                ttsVolume = v
-                                prefs.edit().putInt(Prefs.TTS_VOLUME.pref, v).apply()
+                            onVolumeChange = { v -> ttsVolume = v },
+                            onVolumeChangeFinished = {
+                                prefs.edit { putInt(Prefs.TTS_VOLUME.pref, ttsVolume) }
+
                                 val currentWord = uiState.currentWord
                                 if (currentWord != null) {
                                     voicesManager.speakWord(currentWord, ttsSupported, tts)
@@ -290,15 +292,21 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
                                     presenter.onSpeakSentence()
                                 }
                             },
-                            onSpeechRateChange = { r ->
-                                ttsRate = r
-                                prefs.edit().putInt(Prefs.TTS_RATE.pref, r).apply()
-                                tts?.setSpeechRate((r + 50).toFloat() / 100)
-                                presenter.onSpeakSentence()
+                            onSpeechRateChange = { r -> ttsRate = r },
+                            onSpeechRateChangeFinished = {
+                                prefs.edit { putInt(Prefs.TTS_RATE.pref, ttsRate) }
+                                tts?.setSpeechRate((ttsRate + 50).toFloat() / 100)
+
+                                val currentWord = uiState.currentWord
+                                if (currentWord != null) {
+                                    voicesManager.speakWord(currentWord, ttsSupported, tts)
+                                } else {
+                                    presenter.onSpeakSentence()
+                                }
                             },
                             onWarnIfVolumeTooLowChange = { v ->
                                 warnIfVolumeTooLow = v
-                                prefs.edit().putBoolean(Prefs.WARN_VOLUME_TOO_LOW.pref, v).apply()
+                                prefs.edit { putBoolean(Prefs.WARN_VOLUME_TOO_LOW.pref, v) }
                             },
                             onDismiss = { ttsSettingsVisible = false },
                         )

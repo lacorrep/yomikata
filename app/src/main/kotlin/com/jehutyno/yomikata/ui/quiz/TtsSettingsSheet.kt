@@ -51,7 +51,9 @@ fun TtsSettingsSheet(
     warnIfVolumeTooLow: Boolean,
     showSpeechRate: Boolean,
     onVolumeChange: (Int) -> Unit,
+    onVolumeChangeFinished: () -> Unit,
     onSpeechRateChange: (Int) -> Unit,
+    onSpeechRateChangeFinished: () -> Unit,
     onWarnIfVolumeTooLowChange: (Boolean) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -72,6 +74,7 @@ fun TtsSettingsSheet(
             Slider(
                 value = volume.toFloat(),
                 onValueChange = { onVolumeChange(it.roundToInt()) },
+                onValueChangeFinished = { onVolumeChangeFinished() },
                 valueRange = 0f..maxVolume.coerceAtLeast(1).toFloat(),
                 steps = if (maxVolume > 20) 0 else (maxVolume - 1).coerceAtLeast(0),
                 colors = orangeSliderColors(),
@@ -84,6 +87,7 @@ fun TtsSettingsSheet(
                 Slider(
                     value = speechRate.toFloat(),
                     onValueChange = { onSpeechRateChange(it.roundToInt()) },
+                    onValueChangeFinished = { onSpeechRateChangeFinished() },
                     valueRange = 0f..250f,
                     colors = orangeSliderColors(),
                     modifier = Modifier.fillMaxWidth(),
