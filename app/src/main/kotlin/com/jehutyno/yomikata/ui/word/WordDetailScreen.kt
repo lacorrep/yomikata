@@ -189,7 +189,7 @@ fun WordDetailScreen(
                             markEnd = 0,
                             highlightColor = wordColor,
                             textColor = wordColor,
-                            furiganaColor = wordColor,
+                            furiganaColor = TextDim.toArgb(),
                             textSizeSp = wordFontSize,
                             centered = true,
                             modifier = Modifier.fillMaxWidth(),

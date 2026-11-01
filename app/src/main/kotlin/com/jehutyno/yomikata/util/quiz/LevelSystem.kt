@@ -17,7 +17,7 @@ import kotlin.math.pow
 enum class Level(val level: Int, val minPoints: Int) {
     // level ints must be declared as array indices (see Int.toLevel)
     // make sure the declaration order is from lowest to highest
-    LOW(0, 1),
+    LOW(0, 0),
     MEDIUM(1, 200),         // rep = 6
     HIGH(2, 400),           // rep = 28
     MASTER(3, 600)          // rep = 149
@@ -88,11 +88,6 @@ fun getLevelFromPoints(points: Int): Level {
  * progress to [MAX_POINTS] if level is maxed.
  */
 fun getProgressToNextLevel(points: Int): Float {
-    if ( points < Level.LOW.minPoints ) {
-        // Progress from "unknown" to "LOW" is set to 0.0
-        // (the rest of the function would output 1/(200-1) < 0)
-        return 0f
-    }
     val currentLevel = getLevelFromPoints(points)
     val nextLevel = getNextLevel(currentLevel)
     val nextLevelPoints = if (nextLevel == currentLevel) {

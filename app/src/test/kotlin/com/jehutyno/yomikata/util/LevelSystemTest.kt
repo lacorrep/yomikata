@@ -55,6 +55,11 @@ class LevelSystemTest {
     // --- levelUp ---
 
     @Test
+    fun levelUp_from_zero_gives_LOW() {
+        assertEquals(Level.MEDIUM, getLevelFromPoints(levelUp(0)))
+    }
+
+    @Test
     fun levelUp_from_LOW_gives_MEDIUM() {
         assertEquals(Level.MEDIUM, getLevelFromPoints(levelUp(Level.LOW.minPoints)))
     }
@@ -79,7 +84,7 @@ class LevelSystemTest {
 
     @Test
     fun levelUp_preserves_progress_within_level() {
-        // at 50% progress through LOW (minPoints=1, MEDIUM.minPoints=200) → points=100
+        // at 50% progress through LOW (minPoints=0, MEDIUM.minPoints=200) → points=100
         val points = 100
         val newPoints = levelUp(points)
         val progress = getProgressToNextLevel(newPoints)

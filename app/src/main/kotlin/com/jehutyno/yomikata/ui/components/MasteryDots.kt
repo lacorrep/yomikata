@@ -27,9 +27,9 @@ import com.jehutyno.yomikata.model.getWordColor
 private val dotThresholds = listOf(Level.LOW.minPoints, Level.MEDIUM.minPoints, Level.HIGH.minPoints, Level.MASTER.minPoints)
 
 /**
- * 5 mastery dots (7×7dp pill) for a word card or detail view.
+ * 4 mastery dots (7×7dp pill) for a word card or detail view.
  *
- * @param points mastery level 0..16 (0 = not studied, 1-16 = mastery scale)
+ * @param points mastery level 0..850 (0 = not studied, 850 = maximum points)
  * @param label optional text shown to the right of the dots
  */
 @Composable
@@ -51,7 +51,7 @@ fun MasteryDots(
                 modifier = Modifier
                     .size(7.dp)
                     .clip(CircleShape)
-                    .background(if (points >= threshold) dotColor else BorderDefault),
+                    .background(if (points != 0 && points >= threshold) dotColor else BorderDefault),
             )
         }
         if (label != null) {
@@ -77,7 +77,7 @@ private fun MasteryDotsNotStudiedPreview() {
 @Composable
 private fun MasteryDotsLowPreview() {
     YomikataTheme {
-        MasteryDots(points = Level.LOW.minPoints, label = "Low", modifier = Modifier.padding(14.dp))
+        MasteryDots(points = Level.LOW.minPoints+1, label = "Low", modifier = Modifier.padding(14.dp))
     }
 }
 

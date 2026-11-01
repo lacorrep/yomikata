@@ -211,7 +211,7 @@ Pill flottante Material 3 façon Telegram, le contenu passe dessous et s'estompe
 - Label : 9–11sp, `color_text_dim`
 
 ### MasteryDots (word detail)
-- 5 dots, 7×7dp, radius pill
+- 4 dots, 7×7dp, radius pill
 - Non étudié : `color_border`
 - Progression : couleurs de l'échelle de maîtrise (rouge → vert)
 - Label texte à droite : 9sp, `color_text_ghost`
@@ -226,7 +226,7 @@ Pill flottante Material 3 façon Telegram, le contenu passe dessous et s'estompe
 Barre de maîtrise segmentée unique, partagée par l'écran Study et la liste de mots — exprime *une seule* distribution : combien de mots maîtrisés vs à revoir.
 - En-tête : `[pourcentage]` (22sp, weight 500, `color_text_primary`) + `% maîtrisé` (`color_text_muted`) à gauche ; total `N mots` (`color_text_muted`) à droite
 - Barre : pleine largeur, hauteur 9dp, `radius_pill`, piste `color_border` ; deux segments proportionnels — **maîtrisés** `color_correct` (vert), **à revoir** échelle de maîtrise `#d28e28` (ambre, **jamais** le rouge `wrong`)
-- Légende optionnelle (`showLegend`) : `● N maîtrisés` (vert) / `● N à revoir` (ambre), dots 7dp
+- Légende optionnelle (`showLegend`) : `● Maîtrisés : N ` (vert) / `● À revoir : N` (ambre), dots 7dp
 - 2 catégories : maîtrisés = HIGH+MASTER, à revoir = LOW+MEDIUM (les mots jamais étudiés sont comptés dans « à revoir »)
 - Usage : Study → variante avec légende, dans une card surface ; liste de mots → variante compacte (sans légende), les compteurs étant portés par les filtres-pilules
 
