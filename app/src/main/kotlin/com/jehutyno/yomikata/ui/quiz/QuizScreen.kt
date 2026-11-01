@@ -370,13 +370,7 @@ fun QuizScreen(
                 isRevealed = uiState.isRevealed,
                 onTextChange = onEditTextChange,
                 onBeforeTextChange = onEditBeforeTextChange,
-                onSubmit = { text ->
-                    if (uiState.isRevealed) {
-                        onNextWord()
-                    } else {
-                        onEditSubmit(text)
-                    }
-                },
+                onSubmit = onEditSubmit,
                 onReveal = onEditReveal,
                 onClear = onEditClear,
                 modifier = Modifier.padding(horizontal = 12.dp),

@@ -222,4 +222,33 @@ class QuizPresenterTest(private val length: Int, private val type: QuizType) {
         verify(exactly = 1) { quizViewMock.showAlertQuizEnd(true) }
     }
 
+    @Test
+    fun pronunciation_quiz_answer_workflow() = runBlocking {
+        val sharedPrefMock = mockk<SharedPreferences>()
+        every { sharedPrefMock.getBoolean(Prefs.PLAY_START.pref, any()) } returns false
+        every { sharedPrefMock.getBoolean(Prefs.PLAY_END.pref, any()) } returns false
+        every { sharedPrefMock.getString(Prefs.QUIZ_LENGTH.pref, any()) } returns "5"
+        every { sharedPrefMock.getString(Prefs.QUIZ_SPEED.pref, any()) } returns "2"
+        every { sharedPrefMock.getBoolean(Prefs.FURI_DISPLAYED.pref, any()) } returns false
+
+        val context = mockk<Context>(relaxed = true)
+        val rngMock = object : Random() { override fun nextInt(bound: Int) = 0 }
+
+        val p = QuizPresenter(context, sharedPrefMock, wordRepoMock, sentenceRepoMock,
+            statsRepoMock, quizViewMock, longArrayOf(), QuizStrategy.STRAIGHT, null,
+            arrayListOf(QuizType.TYPE_PRONUNCIATION), rngMock, selectionsMock, wordInQuizMock, scope
+        )
+        p.initQuiz()
+        assertFalse(p.previousAnswerWrong())
+
+        // Wrong answer
+        p.onAnswerGiven("wrong_reading")
+        assertTrue(p.previousAnswerWrong())
+
+        // Correct answer (correction)
+        val correctReading = words[0].reading
+        p.onAnswerGiven(correctReading)
+        assertFalse(p.previousAnswerWrong())
+    }
+
 }

@@ -245,7 +245,7 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
                         },
                         onEditSubmit = { text ->
                             val quizType = uiState.currentQuizType
-                            if (uiState.isRevealed) {
+                            if (uiState.isRevealed && !presenter.previousAnswerWrong()) {
                                 lifecycleScope.launch { presenter.onNextWord() }
                             } else if (quizType == QuizType.TYPE_PRONUNCIATION && !holdOn) {
                                 holdOn = true
