@@ -84,10 +84,17 @@ class WordSource(private val wordDao: WordDao) : WordRepository {
             else -> "${wordsTableName}.japanese"
         }
 
+        val getWordOfSize = when (quizType) {
+            QuizType.TYPE_PRONUNCIATION, QuizType.TYPE_PRONUNCIATION_QCM
+                -> wordDao::getWordsOfReadingSizeRelatedTo
+
+            else -> wordDao::getWordsOfSizeRelatedTo
+        }
+
         val wordIds = mutableListOf<Long>()
         var tryWordSize = wordSize
         while (wordIds.size <= 1 && tryWordSize > 0) {
-            wordIds += wordDao.getWordsOfSizeRelatedTo(wordId, tryWordSize)
+            wordIds += getWordOfSize(wordId, tryWordSize)
             tryWordSize--
         }
 
