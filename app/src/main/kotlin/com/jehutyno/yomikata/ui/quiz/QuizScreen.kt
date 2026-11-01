@@ -1,4 +1,3 @@
-
 package com.jehutyno.yomikata.ui.quiz
 
 import android.graphics.Typeface
@@ -725,54 +724,54 @@ private fun QcmAnswers(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-        for (row in 0..1) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                for (col in 0..1) {
-                    val i = row * 2 + col
-                    if (i < options.size) {
-                        val option = options[i]
-                        val letter = letters.getOrElse(i) { 'A' }
-                        val isCorrect = option.buttonState == AnswerButtonState.Correct
-                        val clickAction = {
-                            if (isRevealed) {
-                                if (isCorrect) {
-                                    onNextWord()
+            for (row in 0..1) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    for (col in 0..1) {
+                        val i = row * 2 + col
+                        if (i < options.size) {
+                            val option = options[i]
+                            val letter = letters.getOrElse(i) { 'A' }
+                            val isCorrect = option.buttonState == AnswerButtonState.Correct
+                            val clickAction = {
+                                if (isRevealed) {
+                                    if (isCorrect) {
+                                        onNextWord()
+                                    }
+                                } else {
+                                    onOptionClick(i)
                                 }
-                            } else {
-                                onOptionClick(i)
                             }
-                        }
-                        if (option.isFuri) {
-                            FuriAnswerButton(
-                                option = option,
-                                indexLetter = letter,
-                                isRevealed = isRevealed,
-                                onClick = clickAction,
-                                modifier = Modifier.weight(1f),
-                            )
+                            if (option.isFuri) {
+                                FuriAnswerButton(
+                                    option = option,
+                                    indexLetter = letter,
+                                    isRevealed = isRevealed,
+                                    onClick = clickAction,
+                                    modifier = Modifier.weight(1f),
+                                )
+                            } else {
+                                AnswerButton(
+                                    label = option.label,
+                                    indexLetter = letter,
+                                    state = option.buttonState,
+                                    isRevealed = isRevealed,
+                                    isSelected = option.buttonState != AnswerButtonState.Default,
+                                    quizType = quizType,
+                                    onClick = clickAction,
+                                    modifier = Modifier.weight(1f),
+                                )
+                            }
                         } else {
-                            AnswerButton(
-                                label = option.label,
-                                indexLetter = letter,
-                                state = option.buttonState,
-                                isRevealed = isRevealed,
-                                isSelected = option.buttonState != AnswerButtonState.Default,
-                                quizType = quizType,
-                                onClick = clickAction,
-                                modifier = Modifier.weight(1f),
-                            )
+                            Spacer(modifier = Modifier.weight(1f))
                         }
-                    } else {
-                        Spacer(modifier = Modifier.weight(1f))
                     }
                 }
             }
         }
     }
-}
 }
 
 // ─── FuriAnswerButton ─────────────────────────────────────────────────────────
