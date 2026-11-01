@@ -85,6 +85,7 @@ import com.jehutyno.yomikata.ui.theme.BorderHeroWrong
 import com.jehutyno.yomikata.ui.theme.BorderWrong
 import com.jehutyno.yomikata.ui.theme.Correct
 import com.jehutyno.yomikata.ui.theme.LocalJapaneseFontFamily
+import com.jehutyno.yomikata.ui.theme.RadiusLg
 import com.jehutyno.yomikata.ui.theme.SurfacePrimary
 import com.jehutyno.yomikata.ui.theme.TextDim
 import com.jehutyno.yomikata.ui.theme.TextGhost
@@ -704,8 +705,8 @@ private fun QcmAnswers(
             modifier = modifier
                 .fillMaxWidth()
                 .height(124.dp)
-                .border(1.dp, BorderDefault, RoundedCornerShape(16.dp))
-                .background(SurfacePrimary, RoundedCornerShape(16.dp))
+                .border(1.dp, BorderDefault, RoundedCornerShape(RadiusLg))
+                .background(SurfacePrimary, RoundedCornerShape(RadiusLg))
                 .clickable(onClick = onTapToReveal)
                 .testTag("test_tag_reveal_choices"),
             contentAlignment = Alignment.Center,
@@ -807,8 +808,8 @@ private fun FuriAnswerButton(
             .fillMaxWidth()
             .height(58.dp)
             .alpha(if (dimmed) 0.4f else 1f)
-            .border(1.dp, borderColor, RoundedCornerShape(16.dp))
-            .background(bgColor, RoundedCornerShape(16.dp))
+            .border(1.dp, borderColor, RoundedCornerShape(RadiusLg))
+            .background(bgColor, RoundedCornerShape(RadiusLg))
             .clickable(enabled = !isRevealed || isCorrect, onClick = onClick)
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
