@@ -62,7 +62,7 @@ where s.jap not like '%' || w.japanese || '%'
 Le nombre de tests JVM (unitaires + screenshots) peut être lu dans `app/build/reports/tests/testDebugUnitTest/index.html`.
 Il y a 29 tests qui produisent 45 fichiers screenshots Roborazzi dans `app/src/test/screenshots`.
 
-**168 tests unitaires JVM — 100% verts** (13 classes ?), soit **197 tests JVM** avec les 29 tests qui produisent les screenshots Roborazzi.
+**169 tests unitaires JVM — 100% verts** (13 classes ?), soit **198 tests JVM** avec les 29 tests qui produisent les screenshots Roborazzi.
 
 Ajoutés lors du durcissement pré-prod (couche 1) :
 - `GetTradMultiLanguageTest` — fallback `getTrad()`/`getName()` DE/ES/PT/ZH sur les 5 modèles (Word/Sentence/KanjiSolo/Radical/Quiz)
