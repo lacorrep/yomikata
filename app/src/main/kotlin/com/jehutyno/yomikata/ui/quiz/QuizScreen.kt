@@ -54,6 +54,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -298,7 +299,7 @@ fun QuizScreen(
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
-                    onClick = {},
+                    onClick = onTapToReveal
                 ),
         ) {
             QuestionZone(
@@ -706,7 +707,8 @@ private fun QcmAnswers(
                 .height(124.dp)
                 .border(1.dp, BorderDefault, RoundedCornerShape(16.dp))
                 .background(SurfacePrimary, RoundedCornerShape(16.dp))
-                .clickable(onClick = onTapToReveal),
+                .clickable(onClick = onTapToReveal)
+                .testTag("test_tag_reveal_choices"),
             contentAlignment = Alignment.Center,
         ) {
             Text(

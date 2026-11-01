@@ -249,7 +249,7 @@
     <string name="undo_to_restore">Annuler et rétablir les données précédentes</string>
     <string name="changes_undone">Les modifications ont été annulées avec succès</string>
     <string name="app_closed_data_recovered">L\'application a été fermée pendant le processus de restauration et une erreur s\'est produite, vos données précédentes ont été récupérées</string>
-    <string name="tap_to_reveal_choices">Cacher les réponses</string>
+    <string name="tap_to_reveal_choices_title">Cacher les réponses</string>
     <string name="tap_to_reveal_choices_summary">Les choix sont cachés jusqu\'à ce que vous touchiez l\'écran</string>
     <string name="reveal_choices">Afficher les choix</string>
     <string name="give_hiragana_reading_hint">Donnez la lecture en hiragana</string>

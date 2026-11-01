@@ -282,7 +282,7 @@
     <string name="undo_to_restore">Undo to restore your previous data</string>
     <string name="changes_undone">Changes were undone successfully</string>
     <string name="app_closed_data_recovered">The app was closed during the restore process and an error occurred, your previous data was recovered</string>
-    <string name="tap_to_reveal_choices">Tap to reveal choices</string>
+    <string name="tap_to_reveal_choices_title">Tap to reveal choices</string>
     <string name="tap_to_reveal_choices_summary">Hide multiple choice options until you tap the screen</string>
     <string name="reveal_choices">Reveal choices</string>
     <string name="prefs_language_section">Language</string>

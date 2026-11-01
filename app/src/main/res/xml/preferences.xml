@@ -48,7 +48,7 @@
             android:icon="@drawable/ic_visibility_black_24dp"
             android:key="tap_to_reveal"
             android:summary="@string/tap_to_reveal_choices_summary"
-            android:title="@string/tap_to_reveal_choices"/>
+            android:title="@string/tap_to_reveal_choices_title"/>
 
         <CheckBoxPreference
             android:defaultValue="false"

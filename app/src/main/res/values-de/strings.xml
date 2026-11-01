@@ -250,7 +250,7 @@
     <string name="undo_to_restore">Rückgängig machen, um frühere Daten wiederherzustellen</string>
     <string name="changes_undone">Änderungen wurden erfolgreich rückgängig gemacht</string>
     <string name="app_closed_data_recovered">Die App wurde während der Wiederherstellung geschlossen, Ihre früheren Daten wurden wiederhergestellt</string>
-    <string name="tap_to_reveal_choices">Antworten ausblenden</string>
+    <string name="tap_to_reveal_choices_title">Antworten ausblenden</string>
     <string name="tap_to_reveal_choices_summary">Antworten werden ausgeblendet, bis Sie den Bildschirm berühren</string>
     <string name="reveal_choices">Antworten anzeigen</string>
     <string name="give_hiragana_reading_hint">Hiragana-Lesung eingeben</string>

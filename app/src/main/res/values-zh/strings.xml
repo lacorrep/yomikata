@@ -249,7 +249,7 @@
     <string name="undo_to_restore">撤销以恢复之前的数据</string>
     <string name="changes_undone">更改已成功撤销</string>
     <string name="app_closed_data_recovered">应用在恢复过程中被关闭，已恢复您之前的数据</string>
-    <string name="tap_to_reveal_choices">点击显示答案</string>
+    <string name="tap_to_reveal_choices_title">点击显示答案</string>
     <string name="tap_to_reveal_choices_summary">触摸屏幕前答案将被隐藏</string>
     <string name="reveal_choices">显示答案</string>
     <string name="give_hiragana_reading_hint">输入平假名读音</string>

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -93,8 +94,8 @@ class QuizScreenInteractionTest {
         val state = qcmState().copy(tapToRevealVisible = true)
         rule.setContent { YomikataTheme { Quiz(state, onTapToReveal = { tapToRevealCalled = true }) } }
 
-        rule.onNodeWithText("Reveal answers").assertIsDisplayed()
-        rule.onNodeWithText("Reveal answers").performClick()
+        rule.onNodeWithTag("test_tag_reveal_choices").assertIsDisplayed()
+        rule.onNodeWithTag("test_tag_reveal_choices").performClick()
         assertEquals(true, tapToRevealCalled)
     }
 

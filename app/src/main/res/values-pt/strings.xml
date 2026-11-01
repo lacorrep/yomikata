@@ -251,7 +251,7 @@
     <string name="undo_to_restore">Desfaça para restaurar os dados anteriores</string>
     <string name="changes_undone">As alterações foram desfeitas com sucesso</string>
     <string name="app_closed_data_recovered">O aplicativo foi fechado durante a restauração, seus dados anteriores foram recuperados</string>
-    <string name="tap_to_reveal_choices">Ocultar respostas</string>
+    <string name="tap_to_reveal_choices_title">Ocultar respostas</string>
     <string name="tap_to_reveal_choices_summary">As respostas ficam ocultas até você tocar na tela</string>
     <string name="reveal_choices">Mostrar opções</string>
     <string name="give_hiragana_reading_hint">Digite a leitura em hiragana</string>
