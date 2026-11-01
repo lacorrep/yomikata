@@ -336,6 +336,6 @@
     <string name="bottom_nav_study">学习</string>
     <string name="bottom_nav_selections">词汇集</string>
     <string name="bottom_nav_settings">设置</string>
-    <string name="prefs_quiz_settings">Quiz Settings</string>
+    <string name="prefs_quiz_settings">测验设置</string>
 
 </resources>
