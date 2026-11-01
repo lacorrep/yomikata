@@ -55,7 +55,7 @@ class WordDetailFragment(private val di: DI) : Fragment(), WordContract.View, Te
                 quizIds, level, searchString,
             )
         }
-        bind<VoicesManager>() with singleton { VoicesManager(requireActivity()) }
+        bind<VoicesManager>() with singleton { VoicesManager(requireActivity(), instance()) }
     }
     @Suppress("unused")
     private val presenter: WordContract.Presenter by subDI.instance()

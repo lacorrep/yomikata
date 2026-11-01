@@ -39,7 +39,7 @@ class AnswersFragment(private val di: DI) : Fragment(), AnswersContract.View, Te
         bind<AnswersContract.Presenter>() with provider {
             AnswersPresenter(instance(arg = lifecycleScope), instance(), instance(), instance())
         }
-        bind<VoicesManager>() with singleton { VoicesManager(requireActivity()) }
+        bind<VoicesManager>() with singleton { VoicesManager(requireActivity(), instance()) }
     }
     @Suppress("unused")
     private val voicesManager: VoicesManager by subDI.instance()

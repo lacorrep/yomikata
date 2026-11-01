@@ -17,6 +17,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatTextView;
+import com.jehutyno.yomikata.util.Prefs;
 
 import java.util.Vector;
 
@@ -381,7 +382,7 @@ public class FuriganaView extends AppCompatTextView {
     private Vector<LineFurigana> m_line_f = new Vector<LineFurigana>();
 
     private void applyFontPreference(Context context) {
-        boolean useSerif = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("font_serif", false);
+        boolean useSerif = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Prefs.FONT_SERIF.getPref(), false);
         this.setTypeface(useSerif ? Typeface.SERIF : Typeface.DEFAULT);
     }
 
@@ -389,19 +390,19 @@ public class FuriganaView extends AppCompatTextView {
     public FuriganaView(Context context) {
         super(context);
         applyFontPreference(context);
-        this.setTextSize(Float.parseFloat(PreferenceManager.getDefaultSharedPreferences(context).getString("font_size", "23")));
+        this.setTextSize(Float.parseFloat(PreferenceManager.getDefaultSharedPreferences(context).getString(Prefs.FONT_SIZE.getPref(), "23")));
     }
 
     public FuriganaView(Context context, AttributeSet attrs) {
         super(context, attrs);
         applyFontPreference(context);
-        this.setTextSize(Float.parseFloat(PreferenceManager.getDefaultSharedPreferences(context).getString("font_size", "23")));
+        this.setTextSize(Float.parseFloat(PreferenceManager.getDefaultSharedPreferences(context).getString(Prefs.FONT_SIZE.getPref(), "23")));
     }
 
     public FuriganaView(Context context, AttributeSet attrs, int style) {
         super(context, attrs, style);
         applyFontPreference(context);
-        this.setTextSize(Float.parseFloat(PreferenceManager.getDefaultSharedPreferences(context).getString("font_size", "23")));
+        this.setTextSize(Float.parseFloat(PreferenceManager.getDefaultSharedPreferences(context).getString(Prefs.FONT_SIZE.getPref(), "23")));
     }
 
     @Override

@@ -45,7 +45,7 @@ class ContentFragment(private val di: DI) : Fragment(), ContentContract.View, Te
     // Kodein
     private val subDI by DI.lazy {
         extend(di)
-        bind<VoicesManager>() with singleton { VoicesManager(requireActivity()) }
+        bind<VoicesManager>() with singleton { VoicesManager(requireActivity(), instance()) }
         bind<ContentContract.Presenter>() with provider {
             ContentPresenter(
                 instance(),

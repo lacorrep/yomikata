@@ -72,7 +72,7 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
     // Kodein
     private val subDI = DI.lazy {
         extend(di)
-        bind<VoicesManager>() with singleton { VoicesManager(requireActivity()) }
+        bind<VoicesManager>() with singleton { VoicesManager(requireActivity(), instance()) }
     }
     @Suppress("unused")
     private val voicesManager: VoicesManager by subDI.instance()

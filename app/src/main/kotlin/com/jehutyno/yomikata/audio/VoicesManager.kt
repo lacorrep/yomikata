@@ -2,12 +2,12 @@ package com.jehutyno.yomikata.audio
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
-import androidx.preference.PreferenceManager
 import com.jehutyno.yomikata.R
 import com.jehutyno.yomikata.model.Sentence
 import com.jehutyno.yomikata.model.Word
@@ -23,8 +23,7 @@ import com.jehutyno.yomikata.util.quiz.getCategoryLevel
 /**
  * Created by valentinlanfranchi on 01/09/2017.
  */
-class VoicesManager(val context: Activity) {
-    private val prefs = PreferenceManager.getDefaultSharedPreferences(context);
+class VoicesManager(val context: Activity, private val prefs: SharedPreferences) {
 
     private val exoPlayerAudio: ExoPlayerAudio = ExoPlayerAudio(context)
     private val exoPlayer = exoPlayerAudio.exoPlayer
