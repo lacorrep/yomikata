@@ -482,7 +482,7 @@ class QuizPresenter(
      * to the result.
      *
      * Colors the word depending on the answer, and animates a check mark. Speaks the word
-     * if correct answer and play_end is True in user preferences.
+     * if play_end is True in user preferences.
      *
      * @param answer User's answer
      * @param choice Index corresponding to multiple choice (0, 1, 2, 3), or -1 if keyboard entry
@@ -552,7 +552,6 @@ class QuizPresenter(
             QuizType.TYPE_AUTO -> TODO()
         }
 
-        // Add "result &&" to play only when answered correctly.
         if (defaultSharedPreferences.getBoolean(Prefs.PLAY_END.pref, true))
             quizView.speakWord(sessionState.getCurrentWord())
 
