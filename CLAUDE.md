@@ -11,12 +11,14 @@ Pour la documentation technique complète, voir `ARCHITECTURE.md` ; l'état du p
 ## Build & Tests
 
 ### Java Home (obligatoire sur cette machine)
+
 ```powershell
 $env:JAVA_HOME = "C:\Users\valen\AppData\Local\Programs\Android Studio\jbr"
 ```
 Sans ça, `gradlew.bat` échoue avec "JAVA_HOME is set to an invalid directory".
 
 ### Commandes courantes
+
 ```powershell
 # Build debug
 .\gradlew.bat assembleDebug
@@ -35,6 +37,7 @@ Sans ça, `gradlew.bat` échoue avec "JAVA_HOME is set to an invalid directory".
 ```
 
 ### Minification (R8) : build release uniquement
+
 - `minifyEnabled true` + `shrinkResources true` sur le build-type `release`. Les effets de R8 (obfuscation, shrink ressources) **ne se voient qu'en release**, toujours valider sur un `assembleRelease` réel, pas en debug.
 - Règles dans `app/proguard-rules.pro`. La plupart des libs (Room, Compose, Firebase, Media3, Kodein 7.x, AndroidX) embarquent leurs consumer rules → garder ce fichier minimal. Pièges déjà couverts : vues custom XML des libs jitpack (règle `extends android.view.View`), Parcelable/enums, modèles (`com.jehutyno.yomikata.model.**`).
 - **Crashlytics** : `-keepattributes SourceFile,LineNumberTable` conservé + le plugin `firebase-crashlytics` uploade le `mapping.txt` automatiquement → traces déobfusquées.
@@ -76,6 +79,7 @@ Toutes les dépendances sont dans `gradle/libs.versions.toml`. Pour mettre à jo
 Les repos sont centralisés dans `settings.gradle` via `dependencyResolutionManagement`. Ne pas ajouter de bloc `repositories {}` dans les sous-modules.
 
 ### SQLite3 (scripts de données)
+
 ```powershell
 $sq = "C:\Users\valen\AppData\Local\Android\Sdk\platform-tools\sqlite3.exe"
 $db = "C:\Users\valen\Repos\dev\yomikata\app\src\main\assets\yomikataz.db"
@@ -88,6 +92,7 @@ $db = "C:\Users\valen\Repos\dev\yomikata\app\src\main\assets\yomikataz.db"
 ## Conventions de code
 
 ### Migrations Room
+
 - Chaque migration est un `object : Migration(X, Y)` dans le companion object de `YomikataDatabase`
 - Elles sont nommées `MIGRATION_X_Y` et ajoutées à `addMigrations(...)` dans `getDatabase()`
 - Toujours incrémenter `DATABASE_VERSION` dans `YomikataDatabase.kt`
@@ -96,18 +101,21 @@ $db = "C:\Users\valen\Repos\dev\yomikata\app\src\main\assets\yomikataz.db"
 - Après une migration qui modifie des données, toujours appliquer les mêmes changements à l'asset `yomikataz.db` et mettre à jour son `PRAGMA user_version`
 
 ### Entités Room (`DatabaseEntities.kt`)
+
 - Chaque entité `RoomFoo` a deux méthodes :
   - `companion object fun from(model: Foo): RoomFoo`, conversion model → Room
   - `fun toFoo(): Foo`, conversion Room → model
 - Les nouveaux champs avec `DEFAULT` doivent avoir `= valeurParDéfaut` dans le constructeur Kotlin pour ne pas casser les call sites existants
 
 ### Modèles
+
 - Les champs de traduction suivent la convention de nommage par table :
   - `words` : `english`, `french`, `german`, `spanish`, `portuguese`, `chinese` (noms complets)
   - `sentences`, `kanji_solo`, `radicals` : `en`, `fr`, `de`, `es`, `pt`, `zh` (codes ISO)
   - `quiz` : `nameEn`, `nameFr`, `nameDe`, `nameEs`, `namePt`, `nameZh` (camelCase préfixé)
 
 ### `getTrad()` / `getName()`
+
 Pattern uniforme dans tous les modèles, chaîne de fallback :
 ```kotlin
 fun getTrad(): String {
@@ -124,18 +132,22 @@ fun getTrad(): String {
 Quand une nouvelle langue est ajoutée, mettre à jour les 6 modèles : `Word`, `Sentence`, `Quiz`, `KanjiSolo`, `KanjiSoloRadical`, `Radical`.
 
 ### SharedPreferences
+
 Toujours passer par `Prefs` enum (dans `util/Prefs.kt`) pour les clés. Ne jamais utiliser de string literal directement. Injecté via Kodein, ne jamais appeler `PreferenceManager.getDefaultSharedPreferences()` dans les presenters ou helpers.
 
 ### Coroutines
+
 Les presenters reçoivent leur `CoroutineScope` en paramètre constructeur (le `lifecycleScope` du fragment/activity hôte). Ne jamais créer `CoroutineScope(Dispatchers.Main)` manuellement dans un presenter ou helper, utiliser `lifecycleScope` dans les composants Android.
 
 ### Tutoriels au premier lancement (`util/TutoOverlay.kt`)
+
 - Utiliser `showTutoOnce(prefs, TutoId.XXX, activity, targetView, title, message) { }`, affichage unique automatique.
 - Utiliser `showTutoAlways()` uniquement pour l'écran de bienvenue (pas de mémorisation d'état).
 - Pour ajouter un nouveau tutoriel : ajouter une entrée dans l'enum `TutoId` avec une clé snake_case stable (ex. `tuto_mon_truc`), ne jamais utiliser un string localisé comme clé.
 - `resetAllTutos(prefs)` est appelé depuis `PrefsActivity` ("reset_tuto"), toute nouvelle entrée `TutoId` est automatiquement réinitialisée.
 
 ### Dialogs (boîtes de dialogue)
+
 - **Nouveau dialog** : utiliser `Context.yomikataAlert(...)` (`ui/components/YomikataDialogHost.kt`) depuis du code impératif, ou `YomikataDialog` directement depuis un composable. Ne pas créer de nouvel `alertDialog { }` Splitties brut.
 - Un seul bouton `DialogButtonStyle.Primary` (pill orange) par dialog ; annulation/secondaire en `Muted` ; action irréversible en `Destructive` (rouge).
 - Le thème global `YomikataAlertDialog` (`styles.xml`, `alertDialogTheme`) restyle automatiquement les dialogs Splitties/AppCompat non migrés, le conserver comme filet de sécurité.
@@ -146,6 +158,7 @@ Les presenters reçoivent leur `CoroutineScope` en paramètre constructeur (le `
 ## Injection de dépendances (Kodein)
 
 ### Bindings dans `applicationModule`
+
 ```kotlin
 bind<Context>()          with instance(context)
 bind<SharedPreferences>() with singleton { PreferenceManager.getDefaultSharedPreferences(instance()) }
@@ -153,6 +166,7 @@ bind<LanguageManager>()  with singleton { LanguageManager(instance()) }
 ```
 
 ### Initialisation au démarrage (`YomikataZKApplication.onCreate`)
+
 ```kotlin
 LanguageManager.initFromPrefs(PreferenceManager.getDefaultSharedPreferences(this))
 ```
@@ -170,6 +184,7 @@ Doit être appelé AVANT tout accès au DI ou à `getTrad()`.
 - Schémas exportés disponibles à partir de la v14 dans `app/schemas/`
 
 ### Règles pour une nouvelle migration
+
 1. Écrire `MIGRATION_X_Y` dans le companion object de `YomikataDatabase`
 2. Ajouter à `addMigrations(...)` dans `getDatabase()`
 3. Incrémenter `DATABASE_VERSION`
@@ -187,6 +202,7 @@ Doit être appelé AVANT tout accès au DI ou à `getTrad()`.
 > ajouter un test dans chaque couche et la passe de pré-production vivent dans `TESTING.md`.
 
 ### Règles
+
 - Tests JVM purs dans `src/test/`, pas de Robolectric, pas d'Android runtime
 - Tests d'instrumentation dans `src/androidTest/` pour Room, DAOs
 - Utiliser `InstantTaskExecutorRule` pour tout test qui touche `LiveData` (dep : `androidx.arch.core:core-testing` dans `testImplementation`)
@@ -194,6 +210,7 @@ Doit être appelé AVANT tout accès au DI ou à `getTrad()`.
 - Pour mocker `Random` : utiliser `object : Random() { override fun nextInt(bound: Int) = 0 }` (pas `mockk<Random>()`, NPE JvmAutoHinter)
 
 ### Tests de screenshot (Roborazzi, couche 3)
+
 Tests de régression visuelle sur la JVM (Robolectric, **sans émulateur**). Baselines committées dans `app/src/test/screenshots/`.
 ```powershell
 .\gradlew.bat recordRoborazziDebug   # (ré)enregistre les baselines (1ère fois / changement voulu)
@@ -214,6 +231,7 @@ Tests de régression visuelle sur la JVM (Robolectric, **sans émulateur**). Bas
 ## Langue de l'application
 
 ### Architecture langue unifiée
+
 La langue UI (strings Android) et langue des traductions (mots/quiz) sont **couplées** via `AppCompatDelegate.setApplicationLocales()` :
 
 - `LanguageManager.initFromPrefs()` → appelle `AppCompatDelegate.setApplicationLocales(current.isoCode)` au démarrage
@@ -223,32 +241,36 @@ La langue UI (strings Android) et langue des traductions (mots/quiz) sont **coup
 - `res/xml/locale_config.xml` déclare les locales supportées (obligatoire Android 13+)
 
 ### Comportement de détection
+
 - Pas de prefs sauvegardée → `fromSystemLocale()` (suit la locale du device)
 - Prefs sauvegardée (choix explicite user) → utilise cette valeur
 - **Ne pas persister la détection automatique**, sinon le changement de langue système ne se reflète plus
 
 ### Piège quiz_subtitle (glyphes CJK en locale non-japonaise)
+
 Dans `QuizzesAdapter`, le subtitle affiche les caractères japonais des noms de quiz. **Toujours** :
 1. Lire depuis `quiz.nameEn.split("%").getOrElse(1) { "" }`, source unique correcte, indépendante de la langue
 2. Mettre `holder.quizSubtitle.textLocale = Locale.JAPANESE`, déclenche le fallback CJK dans les locales DE/ES/PT/etc.
 
 ### Piège encodage XML layouts (BOM)
+
 Android AAPT rejette les fichiers XML avec BOM : ne jamais écrire un layout avec `Set-Content` ou `Out-File` de PowerShell 5.1. Méthode d'écriture sans BOM : skill `socle:pieges-windows`.
 
 ### Piège scripts PowerShell quiz names
+
 Tout script PS5.1 qui lit des données SQLite via pipe et les ré-écrit dans la DB **corrompt les caractères non-ASCII** (CJK et accents). Pattern obligatoire :
 - Lire les données SQLite via `.read` d'un fichier UTF-8 NoBOM, pas via pipe
 - Pour les accents dans les string literals (ö, ä, ü, etc.) : utiliser `[char]0x00F6` etc.
 - Après exécution : vérifier avec hex check qu'aucun `0x3F` n'apparaît dans les colonnes localisées
 
 ### Piège accents dans les traductions QCM (`removeAnyJapanese`)
+
 `String.removeAnyJapanese()` (`util/language/TranslationParser.kt`), appelée par `cleanForQCM(false)` pour la question et les propositions du quiz, doit retirer **uniquement le japonais** (hiragana, katakana, kanji/Han, ponctuation CJK). Ne **jamais** utiliser `\P{InBasicLatin}` : ce bloc se limite à l'ASCII pur, donc les lettres accentuées (é, è, à, ä, ö, ñ, ã, ç…) y sont considérées « non latines » et disparaissent → traductions FR/DE/ES/PT amputées dans le quiz. Cibler les plages Unicode japonaises (constante `japaneseChars`).
 
 **Corollaire, jamais de `\p{In…}`/`\p{Is…}` dans une regex** : ces noms de blocs/scripts sont une **extension propre au JDK**. Le moteur regex adossé à **ICU** de certains builds Android les refuse **à la compilation du motif** (`PatternSyntaxException: U_ILLEGAL_ARGUMENT_ERROR`) → crash en production. Le piège est vicieux : le JDK les accepte, donc **le code compile et les tests JVM passent**. Toujours écrire des **plages `\uXXXX` explicites** dans les classes de caractères (cf. session `fix-regex-icu+lateinit-selections`).
 
-**Limite connue** : pour le chinois (ZH) la traduction est en Han → toujours supprimée par cette fonction (pré-existant, à traiter séparément en rendant `cleanForQCM` conscient de la langue cible).
-
 ### Piège room_master_table
+
 Après chaque modification de schéma qui crée ou modifie des tables, **mettre à jour `room_master_table`** dans l'asset :
 ```sql
 UPDATE room_master_table SET identity_hash = '<hash_from_schemas/VERSION.json>' WHERE id = 42;
@@ -258,6 +280,7 @@ Le hash est dans `app/schemas/.../VERSION.json` champ `identityHash`. Sans ça, 
 ---
 
 ## Scripts de traduction
+
 - `extract_jmdict_de.ps1` / `extract_jmdict_es.ps1` / `extract_jmdict_pt.ps1`, extraction JMdict par langue
 - `update_quiz_de.ps1` / `update_quiz_es.ps1` / `update_quiz_pt.ps1`, noms de quiz localisés
 - `translate_sentences.ps1`, traduction des phrases via Haiku 4.5 (7 425 phrases × 4 langues, 100% complet)
@@ -278,6 +301,7 @@ Le design system de Yomikata est documenté dans `DESIGN.md` à la racine.
 **Toujours consulter DESIGN.md avant de créer ou modifier un composant UI.**
 
 ### Règles absolues
+
 - Aucune couleur hardcodée. Toujours utiliser les tokens de `Color.kt`.
 - Aucun radius arbitraire. Utiliser les valeurs de `Shape.kt` (RadiusXs→RadiusXl).
 - Aucun rouge sur les kanji ou furigana (rouge = mauvaise réponse uniquement).
@@ -285,6 +309,7 @@ Le design system de Yomikata est documenté dans `DESIGN.md` à la racine.
 - Les section headers sont bilingues : format `"JP · EN"`.
 
 ### Fichiers design
+
 - `app/src/main/kotlin/com/jehutyno/yomikata/ui/theme/Color.kt`
 - `app/src/main/kotlin/com/jehutyno/yomikata/ui/theme/Theme.kt`
 - `app/src/main/kotlin/com/jehutyno/yomikata/ui/theme/Type.kt`
