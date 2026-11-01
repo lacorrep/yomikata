@@ -3,7 +3,6 @@ package com.jehutyno.yomikata.screens.quiz
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.media.AudioManager
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
@@ -53,7 +52,6 @@ import com.jehutyno.yomikata.util.showWordSelectionDialog
 import com.jehutyno.yomikata.util.hideSoftKeyboard
 import com.jehutyno.yomikata.util.onTTSinit
 import com.jehutyno.yomikata.util.releaseAsync
-import com.jehutyno.yomikata.util.quiz.Level
 import com.jehutyno.yomikata.util.quiz.QuizType
 import com.jehutyno.yomikata.util.quiz.getCategoryLevel
 import com.jehutyno.yomikata.util.reportError
@@ -62,9 +60,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
-import org.kodein.di.lazy
 import org.kodein.di.singleton
-import splitties.alertdialog.appcompat.*
 import androidx.core.content.edit
 
 
@@ -107,7 +103,7 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
         // Applique la vitesse de parole sauvegardée (Prefs.TTS_RATE) au moteur dès son init,
         // sinon le réglage du panneau vocal reste sans effet pendant le quiz.
         tts?.setSpeechRate((prefs.getInt(Prefs.TTS_RATE.pref, 50) + 50).toFloat() / 100)
-        warnIfVolumeTooLow = prefs.getBoolean(Prefs.WARN_VOLUME_TOO_LOW.pref, true);
+        warnIfVolumeTooLow = prefs.getBoolean(Prefs.WARN_VOLUME_TOO_LOW.pref, true)
         val currentWord = uiState.currentWord
         if (currentWord != null) {
             val noPlayStart = prefs.getBoolean(Prefs.PLAY_START.pref, false)
@@ -195,13 +191,13 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
                             lifecycleScope.launch { presenter.onNextWord() }
                         },
                         onFuriToggle = { isSelected ->
-                            prefs.edit().putBoolean(Prefs.FURI_DISPLAYED.pref, isSelected).apply()
+                            prefs.edit { putBoolean(Prefs.FURI_DISPLAYED.pref, isSelected) }
                             uiState = uiState.copy(showFurigana = isSelected)
                             lifecycleScope.launch { presenter.setIsFuriDisplayed(isSelected) }
                         },
                         onTradToggle = {
                             val newVal = !uiState.showTranslation
-                            prefs.edit().putBoolean(Prefs.TRAD_DISPLAYED.pref, newVal).apply()
+                            prefs.edit { putBoolean(Prefs.TRAD_DISPLAYED.pref, newVal) }
                             uiState = uiState.copy(showTranslation = newVal)
                         },
 
