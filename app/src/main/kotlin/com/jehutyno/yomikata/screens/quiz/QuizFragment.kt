@@ -133,26 +133,8 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
     override fun onResume() {
         super.onResume()
         presenter.start()
-        refreshWordLevels()
-    }
-
-    private fun refreshWordLevels() {
-        val currentWords = uiState.words
-        if (currentWords.isEmpty()) return
         lifecycleScope.launch {
-            var changed = false
-            val updatedWords = currentWords.map { (word, quizType) ->
-                val freshWord = presenter.getWordById(word.id)
-                if (freshWord.level != word.level || freshWord.points != word.points) {
-                    changed = true
-                    Pair(freshWord, quizType)
-                } else {
-                    Pair(word, quizType)
-                }
-            }
-            if (changed) {
-                uiState = uiState.copy(words = updatedWords)
-            }
+            presenter.refreshWordLevels()
         }
     }
 
@@ -398,6 +380,10 @@ class QuizFragment(private val di: DI) : Fragment(), QuizContract.View, TextToSp
             }
         }
         uiState = uiState.copy(words = quizWordsPair, segments = newSegments)
+    }
+
+    override fun updateQuizWords(quizWordsPair: List<Pair<Word, QuizType>>) {
+        uiState = uiState.copy(words = quizWordsPair)
     }
 
     override fun noWords() {

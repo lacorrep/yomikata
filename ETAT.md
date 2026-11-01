@@ -1,6 +1,6 @@
 # État
 
-Dernière mise à jour : 2026-10-31
+Dernière mise à jour : 2026-11-01
 
 Ce fichier décrit où on en est, jamais l'historique (voir `JOURNAL.md`). Il se réécrit à chaque fin de session. Première version reprise de l'ancien `CLAUDE.md`, à confirmer à la prochaine reprise.
 
@@ -62,7 +62,7 @@ where s.jap not like '%' || w.japanese || '%'
 Le nombre de tests JVM (unitaires + screenshots) peut être lu dans `app/build/reports/tests/testDebugUnitTest/index.html`.
 Il y a 29 tests qui produisent 45 fichiers screenshots Roborazzi dans `app/src/test/screenshots`.
 
-**175 tests unitaires JVM — 100% verts** (13 classes ?), soit **204 tests JVM** avec les 29 tests qui produisent les screenshots Roborazzi.
+**168 tests unitaires JVM — 100% verts** (13 classes ?), soit **197 tests JVM** avec les 29 tests qui produisent les screenshots Roborazzi.
 
 Ajoutés lors du durcissement pré-prod (couche 1) :
 - `GetTradMultiLanguageTest` — fallback `getTrad()`/`getName()` DE/ES/PT/ZH sur les 5 modèles (Word/Sentence/KanjiSolo/Radical/Quiz)
@@ -71,6 +71,8 @@ Ajoutés lors du durcissement pré-prod (couche 1) :
 - `CategoriesTest` — mappings catégorie → niveau/taille/version/url de pack de voix
 - `FuriganaParsingTest` — `sentenceFuri`/`sentenceNoFuri`/`sentenceNoAnswerFuri` (`util/ActionsUtils.kt`)
 
-Côté instrumentation : `DatabaseIntegrityTest` (10 tests) vérifie l'asset réel (versions, intégrité, couverture 6 langues, `0x3F`, `identity_hash`, POS) — voir § Tests d'intégrité.
+Côté instrumentation :
+- `DatabaseIntegrityTest` (10 tests) vérifie l'asset réel (versions, intégrité, couverture 6 langues, `0x3F`, `identity_hash`, POS) — voir § Tests d'intégrité.
+- `WordDaoTest` : test de non-régression `pointAccumulationAndLevelProgressionNonRegression` garantissant que l'accumulation de points et la mise à jour du niveau s'effectuent sans écraser les points.
 
 `DialogFlowController` (logique auto-skip fin de quiz) reste non couvert en JVM (couplé `Fragment`/dialog) → à traiter en tests Compose/E2E (couche 4).

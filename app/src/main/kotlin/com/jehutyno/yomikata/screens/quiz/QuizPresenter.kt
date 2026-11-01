@@ -742,6 +742,42 @@ class QuizPresenter(
         wordStatisticsRecorder.updateWordPoints(wordId, points)
     }
 
+    override suspend fun refreshWordLevels() {
+        val allWordIds = (sessionState.quizWords.map { it.first.id } + sessionState.errors.map { it.first.id }).distinct().toLongArray()
+        if (allWordIds.isEmpty()) return
+        val freshWords = wordRepository.getWordsByIds(allWordIds).associateBy { it.id }
+
+        var changed = false
+        val updatedQuizWords = sessionState.quizWords.map { (word, type) ->
+            val fresh = freshWords[word.id]
+            if (fresh != null && (fresh.level != word.level || fresh.points != word.points)) {
+                changed = true
+                Pair(fresh, type)
+            } else {
+                Pair(word, type)
+            }
+        }
+        sessionState.quizWords = updatedQuizWords
+
+        val updatedErrors = sessionState.errors.map { (word, type) ->
+            val fresh = freshWords[word.id]
+            if (fresh != null && (fresh.level != word.level || fresh.points != word.points)) {
+                changed = true
+                Pair(fresh, type)
+            } else {
+                Pair(word, type)
+            }
+        }
+        if (updatedErrors.isNotEmpty() || sessionState.errors.isNotEmpty()) {
+            sessionState.errors.clear()
+            sessionState.errors.addAll(updatedErrors)
+        }
+
+        if (changed) {
+            quizView.updateQuizWords(if (sessionState.errorMode) sessionState.errors else sessionState.quizWords)
+        }
+    }
+
     override suspend fun updateWordLevel(wordId: Long, level: Level) {
         wordStatisticsRecorder.updateWordLevel(wordId, level)
         val updatedQuizWords = sessionState.quizWords.map { (word, type) ->

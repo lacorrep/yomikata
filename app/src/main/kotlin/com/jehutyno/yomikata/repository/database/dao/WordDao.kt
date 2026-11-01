@@ -106,6 +106,9 @@ interface WordDao {
     @Query("SELECT * FROM words WHERE _id = :wordId LIMIT 1")
     suspend fun getWordById(wordId: Long): RoomWords?
 
+    @Query("SELECT * FROM words WHERE _id IN (:ids)")
+    suspend fun getWordsByIds(ids: LongArray): List<RoomWords>
+
     @Query("DELETE FROM words")
     suspend fun deleteAllWords()
 

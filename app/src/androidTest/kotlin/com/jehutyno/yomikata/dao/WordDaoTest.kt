@@ -8,6 +8,7 @@ import androidx.test.filters.MediumTest
 import com.jehutyno.yomikata.repository.database.RoomQuizWord
 import com.jehutyno.yomikata.repository.database.RoomWords
 import com.jehutyno.yomikata.repository.database.YomikataDatabase
+import com.jehutyno.yomikata.util.quiz.getLevelFromPoints
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -250,6 +251,20 @@ class WordDaoTest {
         val word = wordDao.getWordById(id)!!
         assert(word.level == 3)
         assert(word.points == 100)
+    }
+
+    @Test
+    fun pointAccumulationAndLevelProgressionNonRegression() = runBlocking {
+        val id = wordDao.addWord(sampleRoomWords[0].copy(points = 1, level = 0))
+        var points = 1
+        repeat(20) {
+            points += 50
+            wordDao.updateWordPoints(id, points)
+            wordDao.updateWordLevel(id, getLevelFromPoints(points).level)
+        }
+        val finalWord = wordDao.getWordById(id)!!
+        assert(finalWord.points > 1)
+        assert(finalWord.level > 0)
     }
 
     @Test

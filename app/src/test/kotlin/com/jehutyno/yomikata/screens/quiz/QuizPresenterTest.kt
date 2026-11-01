@@ -10,6 +10,7 @@ import com.jehutyno.yomikata.repository.StatsRepository
 import com.jehutyno.yomikata.repository.WordRepository
 import com.jehutyno.yomikata.repository.database.RoomWords
 import com.jehutyno.yomikata.util.Prefs
+import com.jehutyno.yomikata.util.quiz.Level
 import com.jehutyno.yomikata.util.quiz.QuizStrategy
 import com.jehutyno.yomikata.util.quiz.QuizType
 import io.mockk.coEvery
@@ -220,6 +221,18 @@ class QuizPresenterTest(private val length: Int, private val type: QuizType) {
             quizPresenter.onNextWord()
         }
         verify(exactly = 1) { quizViewMock.showAlertQuizEnd(true) }
+    }
+
+    @Test
+    fun refresh_word_levels_updates_session_state_and_view() = runBlocking {
+        quizPresenter.initQuiz()
+        val currentWord = words[0]
+        val updatedWord = currentWord.copy(level = Level.HIGH, points = 200)
+        coEvery { wordRepoMock.getWordsByIds(any()) } returns listOf(updatedWord)
+
+        quizPresenter.refreshWordLevels()
+
+        verify(exactly = 1) { quizViewMock.updateQuizWords(any()) }
     }
 
     @Test

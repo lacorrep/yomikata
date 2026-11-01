@@ -36,6 +36,7 @@ interface WordRepository {
     fun getWordsByLevel(quizIds: LongArray, level: Level?): Flow<List<Word>>
     suspend fun getAllWords() : List<Word>
     suspend fun getWordById(wordId: Long): Word
+    suspend fun getWordsByIds(ids: LongArray): List<Word>
     suspend fun updateWord(updateWord: Word, word: Word?)
     suspend fun updateWordProgression(updateWord: Word, word: Word)
     suspend fun addQuizWord(quizId: Long, wordId: Long)

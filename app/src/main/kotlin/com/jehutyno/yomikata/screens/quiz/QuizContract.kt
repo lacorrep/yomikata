@@ -63,6 +63,7 @@ interface QuizContract {
         fun speakWord(word: Word)
         fun launchSpeakSentence(sentence: Sentence)
         fun incrementInfiniteCount()
+        fun updateQuizWords(quizWordsPair: List<Pair<Word, QuizType>>)
     }
 
     interface Presenter : BasePresenter, SelectionsInterface, WordInQuizInterface {
@@ -70,6 +71,7 @@ interface QuizContract {
         suspend fun loadWords(): List<Pair<Word, QuizType>>
         suspend fun updateWordLevel(wordId: Long, level: Level)
         suspend fun updateWordLevelAndPoints(wordId: Long, level: Level)
+        suspend fun refreshWordLevels()
         suspend fun getRandomWords(wordId: Long, answer: String, wordSize: Int, limit: Int, quizType: QuizType): ArrayList<Word>
         suspend fun updateWordPoints(wordId: Long, points: Int)
         suspend fun getNextProgressiveWords(): List<Pair<Word, QuizType>>
