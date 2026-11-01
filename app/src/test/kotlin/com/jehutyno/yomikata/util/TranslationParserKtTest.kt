@@ -1,12 +1,21 @@
 package com.jehutyno.yomikata.util
 
+import com.jehutyno.yomikata.util.language.AppLanguage
+import com.jehutyno.yomikata.util.language.LanguageManager
+import com.jehutyno.yomikata.util.language.cleanForQCM
 import com.jehutyno.yomikata.util.language.removeAnyJapanese
 import com.jehutyno.yomikata.util.language.removePartsOfSpeechInfo
 import com.jehutyno.yomikata.util.language.removeSynonyms
+import org.junit.After
 import org.junit.Test
 
 
 class TranslationParserKtTest {
+
+    @After
+    fun tearDown() {
+        LanguageManager.current = AppLanguage.DEFAULT
+    }
 
     @Test
     fun removePartsOfSpeechInfo() {
@@ -131,5 +140,20 @@ class TranslationParserKtTest {
                 .removeSynonyms(0)
             == "(adj-na,n) "
         )
+    }
+
+    @Test
+    fun cleanForQCMChineseBypass() {
+        // switch to Chinese locale
+        LanguageManager.current = AppLanguage.CHINESE
+        assert("Test 蛋糕 abc".cleanForQCM(false) == "Test 蛋糕 abc")
+
+        // switch to other locale
+        LanguageManager.current = AppLanguage.ENGLISH
+        assert("Test 蛋糕 abc".cleanForQCM(false) == "Test abc")
+
+        // isJapanese = true bypasses removeAnyJapanese regardless of locale
+        LanguageManager.current = AppLanguage.ENGLISH
+        assert("Test 蛋糕 abc".cleanForQCM(true) == "Test 蛋糕 abc")
     }
 }
