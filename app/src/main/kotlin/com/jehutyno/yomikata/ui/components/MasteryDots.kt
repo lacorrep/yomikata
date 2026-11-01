@@ -51,7 +51,7 @@ fun MasteryDots(
                 modifier = Modifier
                     .size(7.dp)
                     .clip(CircleShape)
-                    .background(if (points != 0 && points >= threshold) dotColor else BorderDefault),
+                    .background(if (points >= threshold) dotColor else BorderDefault),
             )
         }
         if (label != null) {
