@@ -19,7 +19,7 @@ Ce fichier décrit où on en est, jamais l'historique (voir `JOURNAL.md`). Il se
 
 ### Confusions possibles pour les développeurs
 
-- La string `action_favorite` a les mêmes valeurs que `bottomnav_selections`, ça fait doublon.
+- La string `action_selections` a les mêmes valeurs que `bottomnav_selections`, ça fait doublon.
 - Il faudrait renommer `onFavoriteClick` en `onSelectionClick` partout.
 - Confusion possible entre `isReveal` et `tap_to_reveal` : le premier indique si l'utilisateur a répondu à la question (la réponse est révélée), le deuxième correspond à la préférence qui masque initialement les réponses des QCM.
 
